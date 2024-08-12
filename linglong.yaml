@@ -1,0 +1,29 @@
+version: "1"
+
+package:
+  id: io.github.QAmigo
+  name: QAmigo
+  version: 2.0.0.1
+  kind: app
+  description: |
+    Qt cross-platform serial port socket assistant for visualizing data
+
+command:
+  - /opt/apps/io.github.QAmigo/files/bin/QAmigo
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/QAmigo/QAmigo.git
+    version: master
+    commit: 5b288986041316dd7567e68d10e8fcf21cb32dca
+
+build: |
+  cd /project/linglong/sources/QAmigo.git
+  cp android/res/drawable-hdpi/icon.png android/res/drawable-hdpi/QAmigo.png
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
