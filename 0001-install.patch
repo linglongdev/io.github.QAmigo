@@ -1,0 +1,65 @@
+From ce3c070617433941fa71c07be65cae7aa1fce8d2 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Fri, 9 Aug 2024 20:15:34 +0800
+Subject: [PATCH] install
+
+---
+ QAmigo.desktop                    | 11 +++++++++++
+ QAmigo.pro                        |  9 ++++++++-
+ src/SimpleTab/transfercounter.cpp |  2 +-
+ 3 files changed, 20 insertions(+), 2 deletions(-)
+ create mode 100644 QAmigo.desktop
+
+diff --git a/QAmigo.desktop b/QAmigo.desktop
+new file mode 100644
+index 0000000..8fbbcc5
+--- /dev/null
++++ b/QAmigo.desktop
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=QAmigo
++Name=QAmigo
++Name[zh_CN]=QAmigo
++Icon=QAmigo
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=QAmigo
++Version=3.0
+\ No newline at end of file
+diff --git a/QAmigo.pro b/QAmigo.pro
+index b658162..03e0218 100644
+--- a/QAmigo.pro
++++ b/QAmigo.pro
+@@ -68,8 +68,15 @@ FORMS += \
+ 
+ # Default rules for deployment.
+ qnx: target.path = /tmp/$${TARGET}/bin
+-else: unix:!android: target.path = /opt/$${TARGET}/bin
++else: unix:!android: #target.path = /opt/$${TARGET}/bin
+ !isEmpty(target.path): INSTALLS += target
++target.path = $$PREFIX/bin
++desktop.files = QAmigo.desktop
++desktop.path = $$PREFIX/share/applications/
++icons.path = $$PREFIX/share/icons
++icons.files = android/res/drawable-hdpi/QAmigo.png
++
++INSTALLS += target desktop icons
+ 
+ RESOURCES += \
+     resources/icons.qrc
+diff --git a/src/SimpleTab/transfercounter.cpp b/src/SimpleTab/transfercounter.cpp
+index 732ad2d..728294e 100644
+--- a/src/SimpleTab/transfercounter.cpp
++++ b/src/SimpleTab/transfercounter.cpp
+@@ -1,5 +1,5 @@
+ #include "transfercounter.h"
+-
++#include <cmath>
+ TransferCounter::TransferCounter(QWidget *parent, QString name) :
+     QWidget(parent),
+     layout(new QHBoxLayout()),
+-- 
+2.43.4
+
